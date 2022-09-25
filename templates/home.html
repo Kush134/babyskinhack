@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <title>Zafado</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favcon/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favcon/favicon-16x16.png')}}">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      /* -webkit-align-items: center;
+      align-items: center; */
+    }
+
+    .menu {
+      min-width: 100px;
+      width: 70%;
+      max-width: 320px;
+
+      background-color: #FD9C72;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .content {
+      width: 100%;
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+
+      padding: 10px;
+      margin: 10px;
+      cursor: pointer;
+
+      -webkit-transition: 0.3s;
+      transition: 0.3s;
+      z-index: 1;
+
+      background-color: #FD9C72;
+    }
+
+    .menu-button .bar:nth-of-type(1) {
+      margin-top: 0px;
+    }
+
+    .menu-button .bar:nth-of-type(3) {
+      margin-bottom: 0px;
+    }
+
+    .bar {
+      position: relative;
+      display: block;
+
+      width: 25px;
+      height: 3px;
+
+      margin: 5px auto;
+      background-color: #000;
+
+      border-radius: 10px;
+
+      -webkit-transition: 0.3s;
+      transition: 0.3s;
+    }
+
+    .homeBody {
+      height: 100%;
+      width: 100%;
+      background-color: #FFBEA2;
+      display: flex;
+      justify-content: center;
+    }
+
+    .titlebar {
+      width: 100%;
+      height: 59px;
+      background-color: #FD9C72;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: fixed;
+    }
+
+    .accountbg {
+      height: 100%;
+      width: 100%;
+      border-radius: 100px;
+      background-color: #181818;
+      display: flex;
+      justify-content: center;
+      align-items: center; 
+    }
+
+    .isNewParent {
+      height: 30px;
+      width: 30px;
+      border-radius: 100px;
+      border: 3px;
+      border-color: red;
+      border-style: solid;
+      border-spacing: 3px;
+      padding: 3px;
+      margin-right: 15px;
+    }
+
+    .material-icons-round {
+      color: white;
+      font-size: 1.5em;
+    }
+
+    .userinfo {
+      max-height: auto;
+      width: 90%;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      padding-top: 59px;
+      padding-bottom: 10px;
+      margin-left: 20px;
+    }
+
+    .userinfotext {
+      color: black;
+    }
+
+    .UserNameinfo {
+      margin-top: 20px;
+    }
+
+    .UserMailinfo {
+      margin-top: 5px;
+      font-size: .8em;
+    }
+
+    .profilePicture {
+      height: 100px;
+      width: 100px;
+      border-radius: 100px;
+      object-fit: cover;
+    }
+
+    .line1 {
+      width: 100%;
+      height: 3px;
+      margin-top: 10px;
+      background-color: white;
+    }
+
+    .line2 {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+    }
+
+    .item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px 0px;
+      padding-left: 20px;
+      color: black;
+    }
+
+    .itemicon {
+      color: black;
+    }
+
+    .itemName {
+      margin-left: 10px;
+      font-weight: bolder;
+      font-size: .8em;
+    }
+
+    .item:hover {
+      background-color: #FFBEA2;
+    }
+
+    .blackbox {
+      background-color: #181818;
+      width: 82%;
+      margin-left: 20px;
+      border-radius: 10px;
+      padding-left: 15px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .pitem {
+      padding: 5px 0px;
+    }
+
+    .pitem:hover {
+      color: rgb(99, 99, 99);
+    }
+
+    .homemainbody {
+      height: 91vh;
+      width: 100vw;
+      margin-top: 59px;
+      overflow-y: scroll;
+    }
+
+    hr {
+      border-color: white;
+      border-width: 2px;
+    }
+
+    .hometop {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .homebottom {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 10px;
+      align-items: center;
+    }
+
+    .tile {
+      width: 90vw;
+      height: 200px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .tile img{
+      position: absolute;
+      object-fit: cover;
+      top: 0px;
+      left: 0px;
+      border-radius: 10px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tile b {
+      font-size: .8em;
+    }
+
+    .tileauthor {
+      font-size: .7em;
+      margin-bottom: 5px;
+    }
+
+    .filter {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+      border-radius: 10px;
+      background: linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
+    .filter span {
+      color: white;
+      margin-left: 10px;
+    }
+
+    .subtitle {
+      width: 90%;
+      text-align: start;
+      padding-left: 10px;
+    }
+
+    .missions {
+      height: 90vw;
+      width: 90vw;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .final {
+      grid-column-start: 1;
+      grid-column-end: 4;
+    }
+
+    .task {
+      border-radius: 10px;
+      background-color: #181818;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .task:hover {
+      background-color: #636363;
+    }
+
+    .missiontitle {
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .star {
+      color: #FAFF00;
+    }
+    
+    .fab {
+      height: 40px;
+      width: 40px;
+      background-color: #181818;
+      position: fixed;
+      bottom: 10px;
+      right: 5vw;
+      display: flex;
+      justify-content: center;
+      border-radius: 100px;
+      padding: 10px;
+      align-items: center;
+      z-index: 10;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+
+    @media only screen and (min-width: 600px) {
+      .homemainbody {
+        height: 94vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .missions {
+        width: 350px;
+        height: 350px;
+      }
+
+      .tile {
+        width: 90%;
+        height: 300px;
+      }
+
+      hr {
+        width: 60vh;
+      }
+
+      .hometop {
+        width: 60vh;
+      }
+
+      .homebottom {
+        height: 91vh;
+        width: 60vh;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide menu">
+        <div class="userinfo">
+          <img class="profilePicture" src="https://i.pinimg.com/736x/2b/e0/1d/2be01dad0db3765405a80ed28044770f.jpg" alt="your baby">
+          <span class="userinfotext UserNameinfo"><b>{{userinfo['parent']}}</b></span>
+          <span class="userinfotext UserMailinfo"><i></i></span>
+        </div>
+        <div class="line1"></div>
+        <div class="othermenuitem">
+          <div class="item i1" onclick="openleaderboard()">
+            <span class="material-icons-round itemicon">leaderboard</span>
+            <span class="itemName">Leaderboard</span>
+          </div>
+          <div class="item i2">
+            <span class="material-icons-round itemicon">donut_large</span>
+            <span class="itemName">Progress Bar</span>
+          </div>
+        </div>
+        <div class="line2"></div>
+        <div class="item i3">
+          <span class="material-icons-round itemicon">workspace_premium</span>
+          <span class="itemName">Premium</span>
+        </div>
+        <div class="blackbox">
+          <span class="itemName pitem" onclick="openDoctorConsultancy()">Doctor Consultancy</span>
+          <span class="itemName pitem">Offers</span>
+        </div>
+        
+      </div>
+      <div class="swiper-slide content">
+        <div class="menu-button">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <div class="homeBody">
+          <div onclick="openqueries()" class="fab"><span class="material-icons-round">question_answer</span></div>
+          <div class="titlebar">
+            <div class="isNewParent" onclick="openAccounttab()">
+              <div class="accountbg">
+                <span class="material-icons-round">account_circle</span>
+              </div>
+            </div>
+          </div>
+          <div class="homemainbody">
+            <div class="hometop">
+              <h3 class="subtitle">Daily Mission</h3>
+              <div class="missions"></div>
+            </div>
+            <hr>
+            <div class="homebottom">
+              <h3 class="subtitle">Explore</h3>
+              {% for id in vidID %}
+                <div class="tile" onclick="location.href='https://www.youtube.com/embed/{{id}}';">
+                  <img src="https://img.youtube.com/vi/{{id}}/maxresdefault.jpg">
+                  <div class="filter">
+                    <span><b>{{vidID[id]['title']}}</b></span>
+                    <span class="tileauthor" style="color:rgb(136, 136, 136);">{{vidID[id]['author']}}</span>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script>
+    var menuButton = document.querySelector('.menu-button');
+    var openMenu = function () {
+      swiper.slidePrev();
+    };
+    var swiper = new Swiper('.swiper', {
+      slidesPerView: 'auto',
+      initialSlide: 1,
+      resistanceRatio: 0,
+      slideToClickedSlide: true,
+      on: {
+        slideChangeTransitionStart: function () {
+          var slider = this;
+          if (slider.activeIndex === 0) {
+            menuButton.classList.add('cross');
+            // required because of slideToClickedSlide
+            menuButton.removeEventListener('click', openMenu, true);
+          } else {
+            menuButton.classList.remove('cross');
+          }
+        },
+        slideChangeTransitionEnd: function () {
+          var slider = this;
+          if (slider.activeIndex === 1) {
+            menuButton.addEventListener('click', openMenu, true);
+          }
+        },
+      },
+    });
+  </script>
+  <!--my js-->
+  <script>
+    localStorage.setItem("isLogged", true);
+    var gmail = localStorage.getItem("gmail");
+    var maildata = decodeURIComponent(location.href).split("=")[1].replace("&period;",".");
+    if(gmail != maildata) {
+      location.href = "{{url_for('signin')}}";
+    }
+    init();
+
+    function init() {
+      var maildata = decodeURIComponent(location.href).split("=")[1].replace("&period;",".");
+      var profilePicture = document.querySelector(".profilePicture");
+      var UserMailinfo = document.querySelector(".UserMailinfo");
+      var mission = document.querySelector('.missions');
+      UserMailinfo.innerHTML = "<i>"+maildata+"</i>";
+      profilePicture.src = "https://firebasestorage.googleapis.com/v0/b/zafado.appspot.com/o/"+maildata.split("@")[0]+".jpg?alt=media&token=a839a242-7811-46fd-80b2-0a29b80c57f1;"
+      var dayObj = new Date();
+      var day = dayObj.getDay() + 1;
+      var tmpData = "{{userinfo['days']}}".split(",");
+      for(var i=1;i<=6;i++) {
+        if(i < day) {
+          if(tmpData.includes(i+'')) {
+            console.log(i);
+            mission.innerHTML+=`
+            <div class="task">
+              <span class="missiontitle">Day `+i+`</span>
+              <span class="material-icons-round star">star</span>
+            </div>`;
+          } else {
+            mission.innerHTML+=`
+            <div class="task">
+              <span class="missiontitle">Day `+i+`</span>
+              <span class="material-icons-round">clear</span>
+            </div>`;
+          }
+        }else if(i == day) {
+          if(tmpData.includes(i+'')) {
+            mission.innerHTML+=`
+              <div class="task">
+                <span class="missiontitle">Day `+i+`</span>
+                <span class="material-icons-round star">star</span>
+              </div>`;
+          } else {
+            mission.innerHTML+=`
+              <div class="task" onclick="openlearningpage()">
+                <span class="missiontitle">Day `+i+`</span>
+                <span class="material-icons-round">lock_open</span>
+              </div>`;
+          }
+        } else {
+          mission.innerHTML+=`
+          <div class="task">
+            <span class="missiontitle">Day `+i+`</span>
+            <span class="material-icons-round">lock</span>
+          </div>`;
+        }
+      }
+      if(day == 7) {
+        mission.innerHTML+=`
+          <div class="task final" onclick="openlearningpage()">
+            <span class="missiontitle">Day 7</span>
+            <span class="material-icons-round">lock_open</span>
+          </div>`;
+      } else {
+        mission.innerHTML+=`
+        <div class="task final">
+          <span class="missiontitle">Day 7</span>
+          <span class="material-icons-round">lock</span>
+        </div>`;
+      }
+    } 
+
+    function openqueries() {
+      location.href = "{{url_for('queries')}}";
+    }
+
+    function openleaderboard() {
+      location.href = "{{url_for('leaderboard')}}";
+    }
+
+    function openlearningpage() {
+      var dayObj = new Date();
+      var day = dayObj.getDay() + 1;
+      location.href = "{{url_for('learning', day='xxx')}}".replace("xxx", day);
+    }
+
+    function openAccounttab() {
+      location.href = "{{url_for('account', mailid='bang')}}".replace("bang", gmail);
+    }
+
+    function openDoctorConsultancy() {
+      location.href = "{{url_for('doctorConsultancy')}}";
+    }
+
+
+  </script>
+</body>
+</html>

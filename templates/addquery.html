@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/appStyle.css')}}" rel="stylesheet">
+  
+  <title>Zafado</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favcon/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favcon/favicon-16x16.png')}}">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    * {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #FFBEA2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .signup {
+      width: 300px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input {
+      width: 280px;
+      margin-top: 10px;
+    }
+
+    select {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .buttontray {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      width: 280px;
+    }
+
+    button {
+      width: 40%;
+    }
+
+    fieldset {
+      width: 280px;
+      margin-top: 10px;
+    }
+
+    .item {
+      display: flex;
+      justify-content: center;
+    }
+
+    input[type=checkbox] {
+      display: inline;
+      width: 10%;
+      margin: 0px;
+    }
+
+    input[type=file] {
+      width: 0px;
+      height: 0px;
+    }
+    
+    label {
+      display: inline;
+      font-size: .85em;
+      margin-left: 10px;
+    }
+
+    .profilePicture {
+      height: 200px;
+      width: 100%;
+      background-color: #181818;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      margin-bottom: 10px;
+    }
+
+    .material-icons-round {
+      font-size: 2.5em;
+      color: white;
+    }
+
+    .simple-text-input {
+      width: 95%;
+      height: 20vh;
+      resize:  none;
+      border-radius: 10px;
+
+    }
+
+    .info {
+      color: rgb(255, 0, 0);
+    }
+
+    @media only screen and (max-width: 450px) {
+      .signup {
+        height: 90vh;
+      }
+    } 
+  </style>
+</head>
+<body>
+  <div class="signup">
+    <form method="post" enctype="multipart/form-data">
+      
+      <h1 class="header">Queries</h1>
+      <div class="profilePicture" id="profilePicture" onclick="PickImage()">
+        <span class="material-icons-round">add_photo_alternate</span>
+        <input type="file" name="profilepicture" accept="image/*" id="filepicker" onchange="showImage(this);">
+      </div>
+      <span class="info"><b>{{info}}</b></span>
+      <textarea name="input" class="simple-text-input" placeholder="Enter Query"></textarea>
+      <div class="buttontray">
+        <button class="simple-button">Post</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    var image = document.getElementById("filepicker");
+    var imageViewer = document.getElementById("profilePicture");
+    init();
+
+    function init() {
+      var maildata = decodeURIComponent(location.href).split("=")[1].replace("&period;",".");
+      localStorage.setItem("gmail", maildata);
+    }
+
+    function PickImage() {
+      image.click();
+    }
+
+    // image.onchange = () => {
+		// 	imageViewer.style.backgroundImage  = "url('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg')";
+    //   // imageViewer.style.backgroundImage  = image.files[0];
+		// };
+    function showImage(input) {
+      imageViewer.style.backgroundImage = "url('"+(window.URL ? URL : webkitURL).createObjectURL(input.files[0])+"')";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <title>Zafado</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favcon/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favcon/favicon-16x16.png')}}">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    * {
+      padding: 0px;
+      margin: 0px;
+      border: 0px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #FFBEA2;
+    }
+
+    .appbar{
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      align-items: center;
+      height: 59px;
+      position: fixed;
+      top: 0px;
+      background-color: #FFBEA2;
+    }
+
+    .userInfoView {
+      width: 100%;
+      margin-top: 59px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .userInfoView img {
+      width: 150px;
+      height: 150px;
+      border-radius: 100px;
+      object-fit: cover;
+    }
+
+    .username {
+      margin-top: 10px;
+      font-size: 1.2em;
+    }
+
+    .mail {
+      margin-top: 3px;
+      font-size: .8em;
+    }
+
+    .userpoints {
+      margin-top: 3px;
+      font-size: .8em;
+    }
+
+    .editbutton {
+      width: 90%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .pencil {
+      background-color: #FFDFD1;
+      padding: 10px;
+      border-radius: 100px;
+    }
+
+    .pencil:hover {
+      background-color: #ff783e;
+    }
+
+    .backbutton {
+      margin: 10px;
+    }
+
+    .line {
+      background-color: #FFDFD1;
+      width: 90%;
+      height: 3px;
+      border-radius: 100px;
+    }
+
+    .l1 {
+      margin-top: 10px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 10px 0px;
+      width: 90%;
+    }
+
+    .itemname {
+      flex: 1;
+    }
+
+    @media only screen and (min-width: 650px) {
+      .userInfoView {
+        margin-left: 25vw;
+        margin-right: 25vw;
+        width: 50vw;
+      }      
+    }
+
+  </style>
+  </head>
+  <body>
+      <div class="appbar">
+        <span onclick="backbuttonClicked()" class="material-icons-round backbutton">arrow_back</span>
+        <b><h3>My Account</h3><b> 
+      </div>
+      <div class="userInfoView">
+        <div class="editbutton">
+          <span class="material-icons-round pencil">edit</span>
+        </div>
+        <img class="profilePicture" alt="Profile Picture">
+        <span class="username"><b>{{userinfo['parent']}}</b></span>
+        <span class="mail"></span>
+        <span class="userpoints">your Points: {{userpoints}}</span>
+        <div class="line l1"></div>
+
+        <div class="item" onclick="change_password()">
+          <span class="itemname">Change Password</span>
+          <span class="material-icons-round">navigate_next</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="item" onclick="logout()">
+          <span class="itemname">Logout</span>
+          <span class="material-icons-round">navigate_next</span>
+        </div>
+
+        <div class="line"></div>
+
+
+
+      </div>
+
+    <script>
+
+      var profilePicture = document.querySelector(".profilePicture");
+      var mailidview = document.querySelector(".mail");
+      init();
+      function init() {
+        if(!localStorage.getItem("isLogged")) {
+          location.href = "{{url_for('signin')}}";
+        }
+        var maildata = decodeURIComponent(location.href).split("=")[1].replace("&period;",".");
+        mailidview.innerHTML = "<i>"+maildata+"</i>";
+        profilePicture.src = "https://firebasestorage.googleapis.com/v0/b/zafado.appspot.com/o/"+maildata.split("@")[0]+".jpg?alt=media&token=a839a242-7811-46fd-80b2-0a29b80c57f1;";
+      }
+
+      function backbuttonClicked() {
+        history.back();
+      }
+
+      function change_password() {
+        location.href = "{{url_for('changePassword', mailid='xxx')}}".replace("xxx", decodeURIComponent(location.href).split("=")[1].replace("&period;","."));
+      }
+
+      function logout() {
+        localStorage.removeItem("gmail");
+        localStorage.removeItem("isLogged");
+        location.href = "{{url_for('signin')}}";
+      }
+    </script>
+  </body>
+</html>

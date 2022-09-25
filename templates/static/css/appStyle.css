@@ -1,0 +1,32 @@
+.rounded-button {
+  border-radius: 100px;
+  padding: 10px;
+  font-weight: bolder;
+  background-color: white;
+  color: #FF4D00;
+}
+
+.rounded-button:hover {
+  background-color: #FF4D00;
+  color: white;
+}
+
+.simple-button {
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bolder;
+  color: white;
+  background-color: #181818;
+}
+
+.simple-button:hover {
+  background-color: white;
+  color: #181818;
+}
+
+.simple-text-input {
+  border-radius: 5px;
+  background-color: #181818;
+  color: white;
+  padding: 10px 10px;
+}

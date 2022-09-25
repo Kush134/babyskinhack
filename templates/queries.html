@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <title>Zafado</title>
+  <style>
+    * {
+      padding: 0px;
+      margin: 0px;
+      border: 0px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #FFBEA2;
+    }
+
+    .appbar{
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      align-items: center;
+      height: 59px;
+      position: fixed;
+      top: 0px;
+      background-color: #FFBEA2;
+    }
+
+    .main1 {
+      margin-top: 59px;
+      padding: 0px 10px;
+    }
+
+    .questionImage {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .questionbyholder {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .questionby {
+      color: #6E6E6E;
+      font-size: .8em;
+      padding-left: 10px;
+    }
+
+    .questionbyPP {
+      border-radius: 100px;
+      height: 40px;
+      width: 40px;
+      object-fit: cover;
+    }
+
+    .comment {
+      display: flex;
+      background-color: #181818;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .commentAction {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+    }
+
+    .otherCommentTitle {
+      margin-top: 10px;
+    }
+
+    .commentInput {
+      background-color: #181818;
+      flex: 1;
+      height: 100px;
+      resize: none;
+      color: white;
+    }
+
+    .commentIcon {
+      color: white;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .othersComment {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .oComment {
+      font-size: .8em;
+    }
+
+    .line {
+      background-color: white;
+      height: 3px;
+      width: 100%;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+
+    .ppimagesize {
+      height: 30px;
+      width: 30px;
+    }
+
+    .commentby {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 10px 0px;
+    }
+
+    .commentProfilePicture {
+      height: 30px;
+      width: 30px;
+      border-radius: 100px;
+      object-fit: cover;
+    }
+
+    .commentbyperson {
+      font-size: .8em;
+      margin-left: 10px;
+      color: #676767;
+    }
+
+    .l2 {
+      background-color: #181818;
+    }
+
+    .postbutton {
+      background-color: #181818;
+    }
+
+    .fabbuttonicon {
+      color: white;
+    }
+
+    .fab {
+      height: 40px;
+      width: 40px;
+      background-color: #181818;
+      position: fixed;
+      bottom: 10px;
+      right: 5vw;
+      display: flex;
+      justify-content: center;
+      border-radius: 100px;
+      padding: 10px;
+      align-items: center;
+      z-index: 10;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+
+    @media only screen and (min-width: 450px) {
+      .main1 {
+        width: 40vh;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div onclick="openaddqueries()" class="fab"><span class="material-icons-round fabbuttonicon">add</span></div>
+  <div class="appbar"> 
+    <span onclick="backbuttonClicked()" class="material-icons-round backbutton">arrow_back</span>
+    <b><h3>Queries</h3><b> 
+  </div>
+  <div class="main1">
+    <!--tile starting-->
+    {% for value in data %}
+    <h3>Q: {{data[value]['question']}}</h3>
+    {% if data[value]['hasimage'] %}
+      <img class="questionImage" src="https://firebasestorage.googleapis.com/v0/b/zafado.appspot.com/o/queries%2F{{value}}.jpg?alt=media&token=a758ee4e-17b0-44e1-8fb6-6c7680242988" alt="An Image goes here">
+    {% endif %}
+    <div class="questionbyholder">
+      <img class="questionbyPP" src="https://firebasestorage.googleapis.com/v0/b/zafado.appspot.com/o/{{data[value]['name']}}.jpg?alt=media&token=6c7d0395-dc83-4661-b203-94e6907c23bf" alt="Question By">
+      <span class="questionby">Question by {{data[value]['name']}} on {{data[value]['time']}}</span>
+    </div>
+    <form class="comment" method="post">
+      <textarea type="text" class="commentInput" name="CommentInput" placeholder="Comment here...."></textarea>
+      <div class="commentAction">
+        <button class="postbutton" id="postbutton" onclick="postComment('{{value}}')"><span class="material-icons-round commentIcon">send</span></button>
+      </div>
+    </form>
+    <h4 class="otherCommentTitle">Others Comment</h4>
+    <!--others comment start-->
+    {% for comment in data[value]['comments'] %}
+    <div class="othersComment">
+      <span class="oComment">{{data[value]['comments'][comment]['comment']}}</span>
+        <div class="commentby">
+          <img class="commentProfilePicture" src="https://firebasestorage.googleapis.com/v0/b/zafado.appspot.com/o/{{data[value]['comments'][comment]['name']}}.jpg?alt=media&token=6c7d0395-dc83-4661-b203-94e6907c23bf" alt="Question By">
+          <span class="commentbyperson">Comment by {{data[value]['comments'][comment]['name']}} on {{data[value]['comments'][comment]['time']}}</span>
+        </div>
+    </div>
+    <div class="line"></div>
+    {% endfor %}
+    <!--others comments end-->
+    {% endfor %}
+    <!--tile ending-->
+  </div>
+
+  <script>
+    function backbuttonClicked() {
+      history.back();
+    }
+    
+    function postComment(value) {
+      var actionbutton = document.getElementById("postbutton");
+      actionbutton.formAction="{{url_for('queriesCommentPost', mailid='mailidv', no='nov', time='timev')}}".replace("mailidv", localStorage.getItem("gmail")).replace("nov", value).replace("timev", new Date().toDateString());
+      actionbutton.click();
+    }
+
+    function openaddqueries() {
+      location.href = "{{url_for('addaquery', mailid='mailidv', time='timev')}}".replace('mailidv', localStorage.getItem('gmail')).replace('timev', new Date().toDateString());
+    }
+  </script>
+</body>
+</html>

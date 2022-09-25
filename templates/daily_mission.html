@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/chat.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/appStyle.css')}}" rel="stylesheet">
+  <title>Zafado</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favcon/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favcon/favicon-16x16.png')}}">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    * {
+      padding: 0px;
+      margin: 0px;
+      border: 0px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #FFBEA2;
+    }
+
+    .appbar{
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      align-items: center;
+      height: 59px;
+      position: fixed;
+      top: 0px;
+      background-color: #FFBEA2;
+      z-index: 10;
+    }
+
+    .main {
+      width: 50vh;
+      margin-top: 59px;
+    }
+
+    .backbutton {
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .titlering {
+      height: 30px;
+      width: 30px;
+      padding: 10px;
+      border-radius: 100px;
+      background-color: #181818;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      margin-right: 10px;
+    }
+
+    .whitespace {
+      height: 69px;
+    }
+
+    .btn {
+      width: 50vh;
+    }
+
+    center {
+      margin-bottom: 10px;
+    }
+
+    @media only screen and (min-width: 450px) {
+      .chatholder {
+        display: flex;
+        justify-content: center;
+      }
+
+      .chat {
+        width: 50vh;
+      }
+  }
+  </style>
+</head>
+<body>
+  <div class="appbar">
+    <span onclick="backbuttonClicked()" class="material-icons-round backbutton">arrow_back</span>
+    <div class="titlering"></div>
+    <h3 class="title"></h3> 
+  </div>
+  <div class="whitespace"></div>
+  <div class="chatholder">
+    <div class="chat">
+      {% for data in chat %}
+        {% if data[0] == 'M' %}
+          <div class="mine messages">
+            <div class="message last">
+              {{data[1:]}}
+            </div>
+          </div>
+        {% elif data[0] == 'Y' %}
+        <div class="yours messages">
+          <div class="message last">
+            <b>{{data[1:]}}</b>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <center><button class="simple-button btn" onclick="openquiz()">Start Quiz</button></center>
+  <script>
+
+    init();
+
+    function init() {
+      var title = document.querySelector(".title");
+      var titlering = document.querySelector(".titlering");
+      var dayObj = new Date();
+      title.innerHTML = "Day " + (dayObj.getDay() + 1);
+      titlering.innerHTML = "D" + (dayObj.getDay() + 1);
+    }
+
+    function openquiz() {
+      var dayObj = new Date();
+      location.href = "{{url_for('quiz', no=1, day='dayv', mailid='mailidv')}}".replace("dayv", dayObj.getDay()+1).replace("mailidv", localStorage.getItem("gmail"));
+    }
+
+    function backbuttonClicked() {
+      history.back();
+    }
+  </script>
+    
+</body>
+</html>

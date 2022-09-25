@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/appStyle.css')}}" rel="stylesheet">
+  <title>Zafado</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favcon/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favcon/favicon-16x16.png')}}">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <style>
+    * {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+    background-color: #FFBEA2;
+    padding: 10px;
+    }
+
+    .appbar{
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      align-items: center;
+      height: 59px;
+      position: fixed;
+      top: 0px;
+      background-color: #FFBEA2;
+    }
+
+    .backbutton {
+      margin: 10px;
+    }
+
+    form {
+      height: 0px;
+      width: 0px;
+    }
+ 
+    .main {
+      margin-top: 59px;
+      width: 90vw;
+      height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .question {
+      width: 55vh;
+      text-align: start;
+    }
+
+    .option {
+      background-color: #181818;
+      width: 50vh;
+      border-radius: 7px;
+      margin-top: 10px;
+      padding: 10px;
+      color: white;
+    }
+
+    .correctoption {
+        background-color: #1FE433;
+    }
+
+    .simple-button {
+      width: 30%;
+    }
+
+    .timerview  {
+      width: 50vh;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    form {
+      height: 0px;
+      width: 0px;
+    }
+
+    .pointsView {
+      width: 100%;
+      text-align: start;
+    }
+
+    @media only screen and (max-width: 720px) {
+      .question {
+        width: 100%;
+      }
+
+      .option {
+        width: 85vw;
+      }
+
+      .timerview {
+        width: 85vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="appbar">
+    <h3>Result</h3> 
+  </div>
+  <center>
+    <div class="main">
+      <div class="question"><h3>{{no}}. {{question}}</h3></div>
+        {% set ns = namespace(c = 1) %}
+        {% for i in option %}
+          {% if ns.c == crt %}
+              <div class="option correctoption">{{ns.c}}. {{i}}</div>
+          {% else %}
+              <div class="option">{{ns.c}}. {{i}}</div>
+          {% endif %}
+          {% set ns.c = ns.c + 1 %}
+        {% endfor %}
+      <div class="timerview"><button onclick="loadnextquestion()" class="simple-button">Next</button></div>
+      <h3 class="pointsView">Your Points: {{userPoints}}</h3>
+      <form method="post"><button id="formActionNextPage"></button></form>
+    </div>
+</center>
+  <script>
+    function loadnextquestion() {
+      var nextquestionnumber = parseInt('{{no}}')+1;
+      var formActionNextPage = document.getElementById("formActionNextPage");
+      formActionNextPage.formAction = "{{url_for('quiz', no='nov', day='dayv', mailid='mailidv')}}".replace("nov", nextquestionnumber+'').replace("dayv", "{{day}}").replace("mailidv", localStorage.getItem("gmail"));
+      formActionNextPage.click();
+    }
+  </script>
+</body>
+</html>

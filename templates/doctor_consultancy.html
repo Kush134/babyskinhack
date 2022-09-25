@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/appStyle.css')}}" rel="stylesheet">
+  <title>Zafado</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favcon/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favcon/favicon-16x16.png')}}">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+      * {
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .backbutton {
+        margin: 10px;
+      }
+
+
+      body {
+        background-color: #FFBEA2;
+        height: 100vh; 
+      }
+
+      .appbar{
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        width: 100%;
+        align-items: center;
+        height: 59px;
+        position: fixed;
+        top: 0px;
+        background-color: #FFBEA2;
+      }
+
+      h3{
+        flex: 1;
+      }
+
+      .rounded-button{
+        margin-right: 10px;
+      }
+
+      .tile{
+        background-color: white;
+        width: 90vw;
+        margin: 10px 3vw;
+        border-radius: 10px;        
+        display: grid;
+        align-items: center;
+      }
+
+      .infos {
+        display: flex;
+        padding: 10px;
+      }
+
+      .tile img{
+        height: 200px;
+        width: 100%;
+        object-fit: contain;
+        border-radius: 10px 10px 0px 0px;
+      }
+
+      .info {
+        flex: 1;
+      }
+
+      .booking {
+        display: flex;
+        align-items: center;
+      }
+
+      .booking button {
+        background-color: #406882;
+      }
+
+      .tilebody{
+        padding-top: 59px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .p1{
+        font-size: .9em;
+        font-weight: bold;  
+      }
+
+      .p2{
+        font-size: .7em;
+        font-weight: bold; 
+      }
+      
+    @media only screen and (max-width: 450px) {
+      .signup {
+        height: 90vh;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="appbar">
+    <span onclick="backbuttonClicked()" class="material-icons-round backbutton">arrow_back</span>
+    <h3>Doctor Consultancy</h3> 
+    <!-- <div class="iamadoctor">I am a Doctor</div> -->
+    <button class="rounded-button">I am a Doctor</button>
+  </div>
+  <div class="tilebody">
+    {% for i in data %}
+    <div class="tile">
+      <img class="image1" src="https://firebasestorage.googleapis.com/v0/b/zafado.appspot.com/o/Doctor%2F{{i}}.jpg?alt=media&token=af0999f3-f667-41a1-9596-cbe8ad4bc716">
+      <div class="infos">
+        <div class="info">
+          <p class="p1">{{data[i]['name']}}</p>
+          <p class="p2">{{data[i]['des']}}</p>
+          <p class="p2">Experience: {{data[i]['exp']}}</p>
+          <p class="p1">Ratings: {{data[i]['rating']}}</p>
+        </div>
+        <div class="booking">
+          <button class="simple-button">Book An Appointment</button>
+        </div>
+      </div>
+    </div>
+    
+    {% endfor %}
+
+  </div>
+  <script>
+    function backbuttonClicked() {
+      history.back();
+    }
+  </script>
+    
+</body>
+</html>
